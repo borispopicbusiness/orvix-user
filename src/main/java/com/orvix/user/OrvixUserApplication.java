@@ -1,4 +1,4 @@
-package org.orvix.user;
+package com.orvix.user;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
