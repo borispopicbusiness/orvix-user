@@ -14,11 +14,11 @@ import java.util.concurrent.atomic.AtomicLong;
 @RestController
 @RequestMapping("/api/v1/user")
 public class Diagnostics {
-    @Value("POD_NAME:unknown")
+    @Value("${POD_NAME:unknown}")
     private String podName;
-    @Value("POD_NAME:unknown")
+    @Value("${POD_NAME:unknown}")
     private String podNamespace;
-    @Value("POD_NAME:unknown")
+    @Value("${POD_NAME:unknown}")
     private String podIpAddress;
 
     private final DiscoveryClient discoveryClient;

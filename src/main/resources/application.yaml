@@ -7,7 +7,7 @@ spring:
   cloud:
     kubernetes:
       config:
-        name: user-configmap
+        name: user-service-configmap
         namespace: dev
         enableApi: true
         include-profile-specific-sources: false
@@ -28,11 +28,11 @@ spring:
         locator:
           enabled: true
           lower-case-service-id: true
-      routes:
-        - id: user-diagnostics
-          uri: ${user.downstream.uri}
-          predicates:
-            - Path=/api/v1/user/diagnostics/test
+#      routes:
+#        - id: user-diagnostics
+#          uri: ${user.downstream.uri}
+#          predicates:
+#            - Path=/api/v1/user/diagnostics/test
   config:
     import: "optional:kubernetes:"
   security:
