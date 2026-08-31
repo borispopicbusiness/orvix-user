@@ -16,9 +16,9 @@ import java.util.concurrent.atomic.AtomicLong;
 public class Diagnostics {
     @Value("${POD_NAME:unknown}")
     private String podName;
-    @Value("${POD_NAME:unknown}")
+    @Value("${POD_NAMESPACE:unknown}")
     private String podNamespace;
-    @Value("${POD_NAME:unknown}")
+    @Value("${POD_IPAddr:unknown}")
     private String podIpAddress;
 
     private final DiscoveryClient discoveryClient;
@@ -34,16 +34,17 @@ public class Diagnostics {
         AtomicLong count = new AtomicLong(0L);
 
         serviceInstances.forEach(serviceInstance -> {
-            response.append(count.incrementAndGet()).append(":\n")
+            response.append("\n")
+                    .append(count.incrementAndGet()).append(":\n")
                     .append("serviceId = ").append(serviceInstance.getUri())
                     .append("host = ").append(serviceInstance.getHost())
                     .append("port = ").append(serviceInstance.getPort())
                     .append("\n");
         });
 
-        response.append("pod name = ").append(podName)
-                .append("pod namespace = ").append(podNamespace)
-                .append("pod ip address = ").append(podIpAddress);
+        response.append("pod name = ").append(podName).append("\n")
+                .append("pod namespace = ").append(podNamespace).append("\n")
+                .append("pod ip address = ").append(podIpAddress).append("\n");
 
         return Mono.just(response.toString());
     }
