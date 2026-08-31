@@ -1,0 +1,68 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: user
+  cloud:
+    kubernetes:
+      config:
+        name: user-service-configmap
+        namespace: dev
+        enableApi: true
+        include-profile-specific-sources: false
+      reload:
+        enabled: true
+        mode: event
+        strategy: refresh
+        monitoring-config-maps: true
+      client:
+        namespace: dev
+      discovery:
+        enabled: true
+        namespaces:
+          - dev
+        include-not-ready-addresses: false
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+          lower-case-service-id: true
+#      routes:
+#        - id: user-diagnostics
+#          uri: ${user.downstream.uri}
+#          predicates:
+#            - Path=/api/v1/user/diagnostics/test
+  config:
+    import: "optional:kubernetes:"
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://keycloak:8080/realms/orvix-realm
+
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include:
+          - health
+          - info
+          - refresh
+
+  info:
+    env:
+      enabled: true
+
+info:
+  app:
+    name: Orvix User microservice
+    version: 1.0.0
+    description: Orvix User microservice
+
+logging:
+  level:
+    org:
+      springframework:
+        security: DEBUG
